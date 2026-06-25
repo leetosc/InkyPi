@@ -1,0 +1,70 @@
+<div class="form-group">
+    <label for="textPrompt" class="form-label">Text Prompt:</label>
+    <input type="text" id="textPrompt" name="textPrompt" placeholder="Type something..." required class="form-input">
+</div>
+
+<div class="form-group">
+    <label for="endpoint" class="form-label">Endpoint:</label>
+    <input type="text" id="endpoint" name="endpoint" placeholder="https://<resource>.cognitiveservices.azure.com/" required class="form-input">
+</div>
+
+<div class="form-group">
+    <label for="imageDeployment" class="form-label">Image Deployment:</label>
+    <input type="text" id="imageDeployment" name="imageDeployment" placeholder="e.g. gpt-image-2" required class="form-input">
+</div>
+
+<div class="form-group">
+    <label for="apiVersion" class="form-label">API Version:</label>
+    <input type="text" id="apiVersion" name="apiVersion" placeholder="2024-10-21" class="form-input">
+</div>
+
+<div class="form-group">
+    <label for="quality" class="form-label">Quality:</label>
+    <select id="quality" name="quality" class="form-input">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="randomizePrompt" class="form-label">Randomize Text Prompt:</label>
+    <div class="toggle-container">
+        <input type="checkbox" id="randomizePrompt" name="randomizePrompt" class="toggle-checkbox" value="false" onclick="toggleChatDeployment(); this.value=this.checked ? 'true' : 'false';">
+        <label for="randomizePrompt" class="toggle-label"></label>
+    </div>
+</div>
+
+<div class="form-group" id="chatDeploymentGroup" style="display:none;">
+    <label for="chatDeployment" class="form-label">Chat Deployment (for randomize):</label>
+    <input type="text" id="chatDeployment" name="chatDeployment" placeholder="e.g. gpt-4o" class="form-input">
+</div>
+
+
+<script>
+    function toggleChatDeployment() {
+        const randomize = document.getElementById("randomizePrompt").checked;
+        document.getElementById("chatDeploymentGroup").style.display = randomize ? "" : "none";
+    }
+
+    // populate form values from plugin settings
+    document.addEventListener('DOMContentLoaded', () => {
+        var quality = 'medium';
+        var randomize = false;
+
+        if (loadPluginSettings) {
+            document.getElementById('textPrompt').value = pluginSettings.textPrompt || '';
+            document.getElementById('endpoint').value = pluginSettings.endpoint || '';
+            document.getElementById('imageDeployment').value = pluginSettings.imageDeployment || '';
+            document.getElementById('apiVersion').value = pluginSettings.apiVersion || '';
+            document.getElementById('chatDeployment').value = pluginSettings.chatDeployment || '';
+            quality = pluginSettings.quality || quality;
+            randomize = pluginSettings.randomizePrompt || false;
+        }
+
+        document.getElementById('quality').value = quality;
+        document.getElementById('randomizePrompt').checked = randomize;
+        document.getElementById('randomizePrompt').value = randomize ? 'true' : 'false';
+        toggleChatDeployment();
+    });
+</script>

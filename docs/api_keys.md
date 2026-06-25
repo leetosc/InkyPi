@@ -30,6 +30,22 @@ Required for the AI Image and AI Text Plugins
     OPEN_AI_SECRET=your-key
     ```
 
+## Azure Key
+
+Required for the Azure Image Plugin
+
+- Create an Azure OpenAI resource in the [Azure portal](https://portal.azure.com/)
+    - Under "Resource Management" > "Keys and Endpoint", copy the **Endpoint** and **Key 1** (or Key 2)
+- In [Azure OpenAI Studio](https://oai.azure.com/), navigate to your resource → **Deployments**
+    - Create a deployment for an image generation model (e.g. `gpt-image-1` or `gpt-image-2`)
+    - The deployment name will be entered in the plugin settings
+- If you enable the "Randomize Text Prompt" option, also deploy a chat-capable model (e.g. `gpt-4o`) and provide its deployment name in the plugin settings
+- Store your api key in the .env file with the key `AZURE_API_KEY`
+    ```
+    AZURE_API_KEY=your-key
+    ```
+- The Endpoint, Deployment name(s), and API version are configured per-instance in the Azure Image plugin settings
+
 ## Open Weather Map Key
 
 Required for the Weather Plugin
